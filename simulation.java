@@ -14,7 +14,7 @@ public class simulation {
 			line1.sim(31, 0);
 		}
 		*/
-		int[] result = line1.sim("Yorkdale", "Dupont");
+		int[] result = line1.sim(0, 31);
 		System.out.println(result[0]);
 		
 	}
