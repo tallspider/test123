@@ -16,7 +16,7 @@ class SubwayBefore{
       }
    }
   
-   public Stop before(int line, int from, int to){
+   public int before(int line, int from, int to){
       return lines[line].before(from,to);
    }
    
@@ -34,7 +34,7 @@ class SubwayBefore{
 
 class Line{
 
-   Stop[] stops;
+   Stop2[] stops;
    String name;
    int lineNum;
    
@@ -52,10 +52,10 @@ class Line{
          this.name = in.readLine();
          int lineNum = Integer.parseInt(in.readLine());
          
-         this.stops = new Stop[numStop];
+         this.stops = new Stop2[numStop];
          
          for (int i = 0 ; i < numStop ; i++){
-            stops[i] = new Stop(in.readLine().split(" ")[0]);
+            stops[i] = new Stop2((in.readLine().split(" "))[0]);
          }
       }
       catch(IOException iox){
@@ -63,13 +63,13 @@ class Line{
       }
    }
    
-   public Stop before(int from, int to){
+   public int before(int from, int to){
    
       if (from > to){
-         return stops[to + 1];
+         return to + 1;
       }
       else {
-         return stops[to - 1];
+         return to - 1;
       }
    }
    
@@ -86,11 +86,11 @@ class Line{
    }
 }
 
-class Stop{
+class Stop2{
 
    String name;
 
-   public Stop(String name){
+   public Stop2(String name){
       this.name = name;
    }
    

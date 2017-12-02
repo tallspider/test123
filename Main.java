@@ -32,17 +32,19 @@ public class Main {
 	}
 	
 	public static void initialize(int line, int myStop, int destination) {
+		SubwayBefore sub = new SubwayBefore();
+		sub.ImportFrom("line");
 		Main.line = line;
 		Main.myStop = myStop;
 		Main.destination = destination;
 
-		//Main.preStop = method to get stop before destination 
+		Main.preStop = sub.before(line, myStop, destination);
 		
 		initialized = true;
 	}
 	
-	public static int getCurrentStop() {
-		return NameToNumberConverter.toString(line, currentStop);
+	public static String getCurrentStop() {
+		return NameToNumberConverter.IntToString(line, currentStop);
 	}
 	
 	
@@ -52,7 +54,7 @@ public class Main {
 			public void run() {
 				try {
 					while (true) {
-						currentStop = NameToNumberConverter.toInt(line, ReceiveReq.receiveReq("get" + line));
+						currentStop = NameToNumberConverter.StringToInt(line, ReceiveReq.receiveReq("get" + line));
 						System.out.println(currentStop);
 						Thread.sleep(500);
 					}
@@ -69,7 +71,7 @@ public class Main {
 					if (onTrain) {
 						myStop = currentStop;
 						if (myStop == preStop)
-							alert("next stop");
+							alert();
 					}
 						
 						
@@ -103,7 +105,7 @@ public class Main {
 		boardTrain.start();
 	}
 	
-	private static void alert(String warn) {
+	private static void alert() {
 		//method to alert user
 	}
 	

@@ -1,5 +1,3 @@
-package android;
-
 
 import java.awt.*;
 import java.awt.event.*;
@@ -9,6 +7,9 @@ import javax.swing.*;
 public class App implements ActionListener{
 	
 	public static String currInt = "";
+	private static boolean checked = false;
+	private static boolean inited = false;
+	public static String currSta = "";
 	public static String currDesti = "";
 	public static JFrame mainFrame;
 	public static JComboBox lines;
@@ -170,10 +171,6 @@ public class App implements ActionListener{
 		}
 			lower.add(setDesti);
 	    
-	    lower.add(currTime);
-	    clock.setPreferredSize(new Dimension(300,30));
-	    clock.setEditable(false);
-	    lower.add(clock);
 	    
 	    lower.add(currStation);
 	    lower.add(stationName);
@@ -184,11 +181,16 @@ public class App implements ActionListener{
 	    mainFrame.add(lower);
 	    mainFrame.setSize(525, 500);
 	    mainFrame.setVisible(true);
+	    
+	    check(currInt, currSta, currDesti);
 	}
 	
 	public static void time( )
 	{
-		clock.setText();
+		mainframe();
+		System.out.println("time");
+		//clock.setText();
+		stationName.setText(Main.getCurrentStop());
 	}
 	
 	public static void updateLine(String word)
@@ -201,12 +203,17 @@ public class App implements ActionListener{
 	public static void updateLabel(String word)
 	{
 		field.setText(word);
+		currSta = word;
+	    check(currInt, currSta, currDesti);
+
 	}
 	
 	public static void updateDesti(String word)
 	{
 		destination.setText(word);
 		currDesti = word;
+	    check(currInt, currSta, currDesti);
+
 	}
 	
 	public static void alert()
@@ -216,10 +223,39 @@ public class App implements ActionListener{
 
 	}
 
+	public static void check(String line, String station, String destination)
+			{
+		System.out.println("asdfasdfasd");
+				if (line != "" && station != "" && destination != "" && !checked) 
+				{
+					checked = true;
+					int lineI = Integer.parseInt(line);
+					int stationNum = NameToNumberConverter.StringToInt(lineI, station);
+					int destiNum = NameToNumberConverter.StringToInt(lineI, destination);
+					Main.initialize(lineI,stationNum,destiNum);
+					inited = true;
+
+				}
+			}
 	
 	public static void main (String[] args)
 	{
-		mainframe();	
+		mainframe();
+		Thread thread = new Thread() {
+			public void run() {
+				while (true) {
+					System.out.println(inited);
+					if (inited == true) {
+						System.out.println("loop");
+						time();
+						System.out.println("asfasd");
+					}
+						
+				}
+			}
+		};
+		thread.start();
+		System.out.println("start");
 	}
 
 	@Override
