@@ -22,6 +22,7 @@ public class App implements ActionListener{
 	public static JTextField field = new JTextField("");
 	public static JTextField destination = new JTextField("");
 	public static JTextField clock = new JTextField("999");
+	public static JTextField stationName = new JTextField("");
 	public boolean first = false;
 	
 	
@@ -38,6 +39,7 @@ public class App implements ActionListener{
 		JLabel there = new JLabel ("Wake Station");
 		JLabel line = new JLabel ("Current Line");
 		JLabel currTime = new JLabel("Current Time");
+		JLabel currStation = new JLabel("Currently at : ");
 		
 	    panel.setLayout (new BoxLayout(panel, BoxLayout.Y_AXIS));
 	    panel.setPreferredSize(new Dimension(400,400));
@@ -102,6 +104,9 @@ public class App implements ActionListener{
 		destination.setEditable(false);
 		field.setPreferredSize(new Dimension(150,30));
 		destination.setPreferredSize(new Dimension(140,30));
+		currStation.setPreferredSize(new Dimension(150,30));
+		stationName.setEditable(false);
+		stationName.setPreferredSize(new Dimension(150,30));
 		
 		lower.add(line);
 		lower.add(currLine);
@@ -169,6 +174,9 @@ public class App implements ActionListener{
 	    clock.setPreferredSize(new Dimension(300,30));
 	    clock.setEditable(false);
 	    lower.add(clock);
+	    
+	    lower.add(currStation);
+	    lower.add(stationName);
 
 	    lower.setBackground(Color.gray);
 	    
@@ -201,7 +209,7 @@ public class App implements ActionListener{
 		currDesti = word;
 	}
 	
-	public static void arrival()
+	public static void alert()
 	{
 		
         JOptionPane.showMessageDialog(null, "Arrival At" + currDesti, "WAKE UP!!!", JOptionPane.PLAIN_MESSAGE, null); 
