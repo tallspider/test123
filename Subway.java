@@ -1,100 +1,171 @@
+// SUBWAY TIMING
 import java.io.*;
 
 class Subway{
 
-   Line[] lines;
+   Stop[] stops;
+
+   public Subway(Stop[] stops){
+      this.stops = stops;
+   }
    
    public Subway(){
-      lines = new Line[4];
+   
    }
    
-   public void ImportFrom(String fileName){
-   
-      for (int i = 0 ; i < lines.length ; i++){
-         lines[i] = new Line();
-         lines[i].ImportFrom(fileName + (i+1) + ".txt");
-      }
-   }
-  
-   public Stop before(int line, int from, int to){
-      return lines[line].before(from,to);
+   public int getTime(int from, int to){
+      return stops[from].getTime(to);
    }
    
-   public String toString(){
+   public void remove(int index){
    
-      String out = "";
+      Stop[] newStops = new Stop[stops.length-1];
       
-      for (int i = 0 ; i < lines.length ; i++){
-         out += lines[i];
+      for (int i = 0 ; i < newStops.length ; i ++){
+      
+         if (i < index){
+            newStops[i] = stops[i]; 
+         }
+         else if (i >= index){
+            newStops[i] = stops[i+1];
+         }
+         
       }
       
-      return out;
+      for (int i = 0 ; i < newStops.length ; i++){
+         newStops[i].remove(index);
+      }
+      
+      
+      stops = newStops;
    }
-}
-
-class Line{
-
-   Stop[] stops;
-   String name;
-   int lineNum;
    
-   public Line(){
-   
-   }
-
-   public void ImportFrom(String fileName){
+   public void exportFile(String fileName){
    
       try{
-      
-         BufferedReader in = new BufferedReader(new FileReader(fileName));
+         BufferedWriter out = new BufferedWriter(new FileWriter(fileName));
          
-         int numStop = Integer.parseInt(in.readLine());
-         this.name = in.readLine();
-         int lineNum = Integer.parseInt(in.readLine());
+         String line;
+         
+         for (int i = 0 ; i < this.stops.length ; i++){
+         
+            line = stops[i].getName();
+         
+            for (int a = 0; a < this.stops.length ; a++){
+               line += " " + this.getTime(i,a) + " ";
+            }
+            
+            out.write(line);
+            out.newLine();
+         }
+      
+         out.close();
+      }
+      catch(IOException iox){
+      
+      }
+   }
+   
+   public void importFile(String filename){
+   
+      try{
+         BufferedReader in = new BufferedReader(new FileReader(filename));
+         
+         int numStop;
+         int[][] fromTimeTo;
+         String[] stopName;
+         String[] info;
+         String input;
+         
+         input = in.readLine();
+         info = input.split(" ");
+         
+         numStop = info.length - 1;
+         fromTimeTo = new int[numStop][numStop];
+         stopName = new String[numStop];
+         
+         stopName[0] = info[0];
+         for (int i = 0 ; i < info.length-1 ; i++){
+            fromTimeTo[0][i] = Integer.parseInt(info[i+1]);
+         }
+         
+         for (int i = 1 ; i < numStop ; i++){
+         
+            input = in.readLine();
+            info = input.split(" ");
+         
+            stopName[i] = info[0];
+            for (int a = 0 ; a < info.length-1 ; a++){
+               fromTimeTo[i][a] = Integer.parseInt(info[a+1]);
+            }
+         }
          
          this.stops = new Stop[numStop];
          
-         for (int i = 0 ; i < numStop ; i++){
-            stops[i] = new Stop(in.readLine().split(" ")[0]);
+         for (int i = 0 ; i < numStop; i++){
+         
+            this.stops[i] = new Stop(stopName[i], fromTimeTo[i]);
+         
          }
+         
       }
       catch(IOException iox){
-      System.out.println("ERRRRROR");
+      
       }
-   }
-   
-   public Stop before(int from, int to){
-   
-      if (from > to){
-         return stops[to + 1];
-      }
-      else {
-         return stops[to - 1];
-      }
-   }
-   
+   }  
+
    public String toString(){
    
-      String out = "";
-   
-      out += this.name + "\n\n";
-   
-      for (int i = 0 ; i < stops.length; i ++){
-         out += stops[i] + "\n";
+      String output = "";
+      String line;
+         
+      for (int i = 0 ; i < this.stops.length ; i++){
+         
+         line = i + "." + stops[i].getName();
+         
+         for (int a = 0; a < this.stops.length ; a++){
+            line += " " + this.getTime(i,a) + " ";
+         }
+         output += line + "\n";
       }
-      return out;
+   
+      return output;
    }
 }
 
 class Stop{
 
-   String name;
+   String stopName;
+   int[] timeTo;
 
-   public Stop(String name){
-      this.name = name;
+   public Stop(String stopName, int[] timeTo){
+   
+      this.stopName = stopName;
+      this.timeTo = timeTo;
    }
    
-   public String toString(){
-      return name;
+   public int getTime(int index){
+      return timeTo[index];
+   }
+   
+   public String getName(){
+      return stopName;
+   }
+   
+   public void remove(int index){
+   
+      int[] newTime = new int[this.timeTo.length - 1];
+      
+      for (int i = 0; i < newTime.length; i++){
+      
+         if (i < index){
+            newTime[i] = this.getTime(i);
+         }
+         else if (i >= index){
+            newTime[i] = this.getTime(i + 1);
+         }
+      }
+      
+      this.timeTo = newTime;
    }
 }
