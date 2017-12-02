@@ -8,7 +8,7 @@ public class SendReq {
 	public static void sendReq(String info, String post) throws IOException {
 		Request.Post("http://localhost:8081/" + post).useExpectContinue()
         .version(HttpVersion.HTTP_1_1)
-        .bodyString("asdfdsa", ContentType.DEFAULT_TEXT)
+        .bodyString(info, ContentType.DEFAULT_TEXT)
         .execute().returnContent().asBytes();
 
 	}
