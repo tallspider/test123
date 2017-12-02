@@ -13,7 +13,7 @@ public class simulation2 {
 			line1.sim(31, 0);
 		}
 		*/
-		int[] result = line2.sim(0, 9);
+		int[] result = line2.sim(0, 30);
 		System.out.println(result[0]);
 		
 	}
