@@ -1,0 +1,9 @@
+6
+Scarborough Line
+3
+Kennedy 3
+Lawrence_East 2
+Ellesmere 1
+Midland 1
+Scarborough_Centre 1
+McCowan 0

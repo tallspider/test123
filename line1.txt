@@ -1,0 +1,35 @@
+32
+Yonge_University Line
+1
+Sheppard_West 3
+Wilson 2
+Yorkdale 2
+Lawrence_West 1
+Glencairn 1
+Eglinton_West 3
+St_Clair_West 2
+Dupont 1
+Spadina 1
+St_George 1
+Museum 1
+Queen's_Park 1
+St_Patrick 1
+Osgoode 1
+St_Andrew 1
+Union 1
+King 1
+Queen 1
+Dundas 1
+College 1
+Wellesley 1
+Bloor-Yonge 1
+Rosedale 1
+Summerhill 1
+St_Clair 2
+Davisville 2
+Eglinton 3
+Lawrence 2
+York_Mills 3
+Sheppard-Yonge 1
+North-York-Centre 2
+Finch 0

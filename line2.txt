@@ -1,0 +1,34 @@
+31
+Bloor-Danforth Line
+2
+Kipling 3
+Islington 2
+Royal_York 2
+Old_Mill 1
+Jane 1
+Runnymede 1
+High_Park 1
+Keele 1
+Dundas_West 1
+Lansdowne 1
+Dufferin 1
+Ossington 1
+Christie 1
+Bathurst 1
+Spadina 1
+St_George 1
+Bay 1
+Bloor-Yonge 1
+Sherbourne 1
+Castle_Frank 1
+Broadview 1
+Chester 1
+Pape 1
+Donlands 1
+Greenwood 2
+Coxwell 1
+Woodbine 1
+Main_Street 1
+Victoria_Park 2
+Warden 3
+Kennedy 0
