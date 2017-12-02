@@ -41,6 +41,10 @@ public class Main {
 		initialized = true;
 	}
 	
+	public static int getCurrentStop() {
+		return NameToNumberConverter.toString(line, currentStop);
+	}
+	
 	
 	private static void beginJourney() {
 
@@ -48,7 +52,7 @@ public class Main {
 			public void run() {
 				try {
 					while (true) {
-						//currentStop = NameToNumberConverter.toInt(ReceiveReq.receiveReq("get" + line), line);
+						currentStop = NameToNumberConverter.toInt(line, ReceiveReq.receiveReq("get" + line));
 						System.out.println(currentStop);
 						Thread.sleep(500);
 					}
