@@ -45,6 +45,6 @@ public class NameToNumberConverter {
 		default:
 			break;
 		}
-		return group[index];
+		return group[group.length-index];
 	}
 }

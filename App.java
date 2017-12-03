@@ -1,6 +1,7 @@
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
 
 import javax.swing.*;
 
@@ -49,20 +50,20 @@ public class App implements ActionListener{
 	    String[] nothing = {" "};
 	    empty = new JComboBox(nothing);
 	    empty1 = new JComboBox(nothing);
-	    
+	    																																																																																																																																		
 	    String[] lineNum = {"1", "2","3","4"};
 	    lines = new JComboBox(lineNum);
 	    
-	    String[] list = {"Finch", "North York", "Sheppard", "York Mills", "Lawrence","Eglinton", "Davisville","St. Clair", "Summerhill", "Rosedale", "Bloor-Yonge", "Wellesley", "College", "Dundas", "Queen", "King", "Union", "St. Andrew", "Osgoode", "St. Patrick", "Queen's Park", "Museum","St. George", "Spadina", "Dupont", "St. Clair West", "Eglinton West", "Glencarin", "Lawrence West", "Yorkdale", "Wilson", "Sheppard West"};
+	    String[] list = {"Finch", "North_York", "Sheppard", "York_Mills", "Lawrence","Eglinton", "Davisville","St_Clair", "Summerhill", "Rosedale", "Bloor-Yonge", "Wellesley", "College", "Dundas", "Queen", "King", "Union", "St_Andrew", "Osgoode", "St_Patrick", "Queen's_Park", "Museum", "St_George", "Spadina", "Dupont", "St_Clair_West", "Eglinton_West", "Glencarin", "Lawrence_West", "Yorkdale", "Wilson", "Sheppard_West"};
 	    box = new JComboBox(list);
 		
-	    String[] list1 = {"Kennedy", "Warden", "Victoria Park", "Main Street", "Woodbine", "Coxwell", "Greenwood", "Donlands", "Pape", "Chester", "Broadview", "Castle Frank", "Sherbourne", "Bloor-Yonge", "Bay", "St. George", "Spadina",	"Bathurst",	"Christie",	"Ossington"	, "Dufferin","Lansdowne", "Dundas West", "Keele", "High Park",	"Runnymede", "Jane", "Old Mill",	"Royal York", "Islington", "Kipling"};
+	    String[] list1 = {"Kennedy", "Warden", "Victoria_Park", "Main_Street", "Woodbine", "Coxwell", "Greenwood", "Donlands", "Pape", "Chester", "Broadview", "Castle_Frank", "Sherbourne", "Bloor-Yonge", "Bay", "St_George", "Spadina",	"Bathurst",	"Christie",	"Ossington"	, "Dufferin","Lansdowne", "Dundas_West", "Keele", "High_Park",	"Runnymede", "Jane", "Old_Mill",	"Royal_York", "Islington", "Kipling"};
 	    box1 = new JComboBox(list1);
 	    
-	    String[] list2 = {"McCowan", "Scarborough Centre", "Midland", "Ellesmere", "Lawrence East", "Kennedy"};
+	    String[] list2 = {"McCowan", "Scarborough_Centre", "Midland", "Ellesmere", "Lawrence_East", "Kennedy"};
 	    box2 = new JComboBox(list2);
 	    
-	    String[] list3 = {"Don Mills", "Leslie", "Bessarion", "Bayview", "Yonge"};
+	    String[] list3 = {"Don_Mills", "Leslie", "Bessarion", "Bayview", "Sheppard-Yonge"};
 	    box3 = new JComboBox(list3);
 	   
 	    setLine.addActionListener(new ActionListener()
@@ -107,6 +108,7 @@ public class App implements ActionListener{
 		destination.setPreferredSize(new Dimension(140,30));
 		currStation.setPreferredSize(new Dimension(150,30));
 		stationName.setEditable(false);
+		currLine.setEditable(false);
 		stationName.setPreferredSize(new Dimension(150,30));
 		
 		lower.add(line);
@@ -185,12 +187,11 @@ public class App implements ActionListener{
 	    check(currInt, currSta, currDesti);
 	}
 	
-	public static void time( )
+	public static void time( ) throws IOException
 	{
-		mainframe();
 		System.out.println("time");
 		//clock.setText();
-		stationName.setText(Main.getCurrentStop());
+		stationName.setText(ReceiveReq.receiveReq("get" + currInt));
 	}
 	
 	public static void updateLine(String word)
@@ -219,7 +220,7 @@ public class App implements ActionListener{
 	public static void alert()
 	{
 		
-        JOptionPane.showMessageDialog(null, "Arrival At" + currDesti, "WAKE UP!!!", JOptionPane.PLAIN_MESSAGE, null); 
+        JOptionPane.showMessageDialog(null, "Arrival At: " + currDesti, "WAKE UP!!!", JOptionPane.PLAIN_MESSAGE, null); 
 
 	}
 
@@ -244,11 +245,20 @@ public class App implements ActionListener{
 		Thread thread = new Thread() {
 			public void run() {
 				while (true) {
+
 					System.out.println(inited);
 					if (inited == true) {
-						System.out.println("loop");
-						time();
-						System.out.println("asfasd");
+						try {
+							time();
+							if (ReceiveReq.receiveReq("get" + currInt).equals(currDesti))
+							{
+								alert();
+								inited = false;
+							}
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					}
 						
 				}
